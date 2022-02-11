@@ -1,33 +1,31 @@
-import knex from './database/config.js'
-import { createTable } from './database/create-table.js';
-// const express = require('express')
-// const app = express()
+import express from "express";
+import { createServer } from "http";
+import path from "path";
+import { Server } from "socket.io";
+import { router } from "./routers/app.routers";
 
-(async () => {
-  try {
-    await createTable('productos')
-  } 
-  catch (error) {
-    console.log(error);
-    throw new Error(error.message)
-  } 
-  finally {
-    knex.destroy()
-  }
-})()
+const app = express()
+const httpServer = createServer(app)
+const io = new Server(httpServer)
+
+let chat = []
+const PORT = process.env.PORT || 8080;
+
+// Middlewares
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Rutas
-// app.use('/api', rutasApi);
+app.use(router);
 
-// io.on('connection', socket => {
-//   emitir()
+io.on('connection', socket => {
+  emitir()
 
-//   socket.on("incomingMessage", message =>{
-//     chat.push(message)
-//     emitir()
-//   })
-// })
+  socket.on("incomingMessage", message =>{
+    chat.push(message)
+    emitir()
+  })
+})
 
-// const emitir = () => io.sockets.emit("chat", chat)
+const emitir = () => io.sockets.emit("chat", chat)
 
-// server.listen(3000, () => { console.log(`Running on port: ${3000}`)})
+httpServer.listen(PORT, () => { console.log(`Running on port: ${PORT}`)})

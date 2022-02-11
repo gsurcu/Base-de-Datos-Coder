@@ -1,5 +1,6 @@
 import knex from "knex";
-const config = {
+
+const configMariaDB = {
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
@@ -8,4 +9,13 @@ const config = {
     database: 'coder16'
   }
 };
-export default knex(config)
+
+const configSQLite3 = {
+  client: 'sqlite3',
+  connection: {
+    filename: './database/mydb.sqlite'
+  },
+  useNullAsDefault: true
+}
+
+export { configMariaDB, configSQLite3 }
