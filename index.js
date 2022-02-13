@@ -1,6 +1,5 @@
 import express from "express";
 import { createServer } from "http";
-import path from "path";
 import { Server } from "socket.io";
 import { router } from "./routers/app.routers.js";
 import { ProductosApi } from "./models/productos/productos.api.js";
@@ -14,8 +13,6 @@ const chat = new ChatApi("chat")
 const productos = new ProductosApi("productos")
 const PORT = process.env.PORT || 8080;
 
-// Middlewares
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Template Engines
 app.set('views', './view');

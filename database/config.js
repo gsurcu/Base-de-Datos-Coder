@@ -11,7 +11,7 @@ const configMariaDB = {
 };
 
 const configSQLite3 = {
-  client: 'sqlite3',
+  client: 'better-sqlite3',
   connection: {
     filename: './database/mydb.sqlite'
   },
