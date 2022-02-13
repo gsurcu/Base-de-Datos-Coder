@@ -1,9 +1,9 @@
-import { configSQLite3 } from "../../database/config";
+import { configSQLite3 } from "../../database/config.js";
 import knex from "knex";
 
 export class ChatApi {
   constructor(tableName) {
-    this.knex = knex(configSQLite);
+    this.knex = knex(configSQLite3);
     this.tableName = tableName;
     this.open();
   }

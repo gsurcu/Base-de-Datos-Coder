@@ -1,0 +1,23 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Base de Datos
+  link(rel='stylesheet' href='./style.css')
+  link(rel='stylesheet' href='./normalize.css')
+main
+  h1 Chat Coderhouse
+  div.seccion
+    div.form
+      include partials/form
+    div.productos
+      h2.azul Vista de Productos
+      div#cards.cards
+        include partials/prod
+  div#appChat.seccion
+    h2.azul Centro de mensajes
+    div.form
+      include partials/chat
+script(src='/socket.io/socket.io.js')
+script(src='/js/index.js')

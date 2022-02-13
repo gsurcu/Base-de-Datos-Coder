@@ -4,19 +4,49 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AppChat</title>
+  <title>Base de Datos</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./normalize.css">
 </head>
 <body>
-  
-  <h1>Chat Coderhouse</h1>
+  <main>
+    <h1>Chat Coderhouse</h1>
 
-  <div id="messages"></div>
-  
-  <input type="text" name="nombre" id="nombre" placeholder="Introduzca su nombre">
-  <input type="text" name="" id="mensaje" placeholder="Cuentanos algo...">
-  <button type="button" onclick="sendMessage()">Enviar</button>
+    <div class="seccion">
+      <div class="form">
+        <h2 class="azul">Ingrese un producto</h2>
+        <form action='/api/productos' method="POST">
+          <label for="title"  class="none"></label>  
+          <input type="text" id="title"  name="title"  placeholder="Ingrese   del producto"  required>
+          <label for="price"  class="none"></label>  
+          <input type="text" id="price"  name="price"  placeholder="Ingrese   del producto"  required>
+          <label for="imageUrl"  class="none"></label>  
+          <input type="text" id="imageUrl"  name="imageUrl"  placeholder="Ingrese   del producto"  required>
+            <div>
+              <input type="submit" value="Upload Data">
+            </div>
+        </form>
+      </div>
 
+      <div class="productos">
+        <h2 class="azul">Vista de Productos</h2>
+        <div class="cards" id="cards">
+        </div>
+      </div>
+    </div>
+
+    <div id="appChat" class="seccion">
+      <h2 class="azul">Centro de mensajes</h2>
+      <div class="form">
+        <input required type="email" name="nombreUsuario" id="nombreUsuario" placeholder="Introduzca su mail">
+        <div id="messages"></div>
+        <input required type="text" name="" id="mensaje" placeholder="Ingrese un mensaje...">
+        <button type="button" onclick="sendMessage()">Enviar</button>
+      </div>
+    </div>
+  </main>
+    
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/index.js"></script>
+  <script src="/js/index.js"></script>
 </body>
 </html>

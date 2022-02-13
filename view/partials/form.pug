@@ -1,0 +1,10 @@
+h2.azul Ingrese un producto
+form(action='/api/productos' method='POST')
+  label.none(for='title')
+  input#title(type='text' name='title' placeholder='Ingrese   del producto' required='')
+  label.none(for='price')
+  input#price(type='text' name='price' placeholder='Ingrese   del producto' required='')
+  label.none(for='imageUrl')
+  input#imageUrl(type='text' name='imageUrl' placeholder='Ingrese   del producto' required='')
+  div
+    input(type='submit' value='Upload Data')

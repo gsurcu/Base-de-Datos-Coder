@@ -1,4 +1,4 @@
-import { configMariaDB } from "../../database/config";
+import { configMariaDB } from "../../database/config.js";
 import knex from "knex";
 
 export class ProductosApi {
@@ -28,10 +28,14 @@ export class ProductosApi {
 
   async listarPorIdOTodo(id) {
     try {
-      const result = await this.knex.from(this.tableName).select("*").where("id", id);
-      if (result.length === 0) {
-        return null;
+      if (id) {
+        const result = await this.knex.from(this.tableName).select("*").where("id", id);
+        if (result.length === 0) {
+          return null;
+        }
+        return result;
       }
+      const result = await this.knex.from(this.tableName).select("*");
       return result;
     } catch (error) {
       console.log(error.message);
@@ -39,29 +43,30 @@ export class ProductosApi {
   };
 
   async guardar(prod) {
-    const nuevoProducto = { ...prod, id: uuidv4(), timestamp: Date.now() };
-    if (nuevoProducto) {
-      this.productos.push(nuevoProducto);
-      
-      await fs.writeFile(this.archivo,JSON.stringify(this.productos,null, 2));
-      return nuevoProducto;
+    try {
+      await this.knex(this.tableName).insert(prod);
+    } catch (error) {
+      console.log(error.message);
     }
-    return nuevoProducto
   };
 
   async actualizar(prod, id) {
-    const indice = this.productos.findIndex(prod => prod.id === id);
-    this.productos[indice] = { id: id, ...prod, timestamp: this.productos[indice].timestamp };
-
-    await fs.writeFile(this.archivo,JSON.stringify(this.productos,null, 2));
-    return this.productos[indice]
+    try {
+      await this.knex(this.tableName).where("id", id).update(prod);
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
   };
 
   async eliminar(id) {
-    const indice = this.productos.findIndex(prod => prod.id === id);
-    this.productos.splice(indice, 1);
-    
-    await fs.writeFile(this.archivo,JSON.stringify(this.productos,null, 2));
-    return
+    try {
+      await this.knex(this.tableName).where("id", id).del();
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
   }
 }
